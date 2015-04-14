@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+resources/pivman.desktop usr/share/applications/
+#resources/pivman.xpm usr/share/pixmaps/
+resources/pivman-large.png => usr/share/icons/hicolor/128x128/apps/pivman.png

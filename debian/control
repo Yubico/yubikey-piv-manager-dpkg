@@ -1,0 +1,27 @@
+Source: yubikey-piv-manager
+Maintainer: Debian Authentication Maintainers <pkg-auth-maintainers@lists.alioth.debian.org>
+Uploaders: Dain Nilsson <dain@yubico.com>,
+           Simon Josefsson <simon@josefsson.org>,
+           Klas Lindfors <klas@yubico.com>
+Section: python
+Priority: optional
+Build-Depends: debhelper (>= 9),
+               dh-exec,
+               python (>= 2.7),
+               python-nose,
+               python-setuptools (>= 0.6b3)
+Standards-Version: 3.9.6
+X-Python-Version: >= 2.7
+Homepage: https://developers.yubico.com/yubikey-piv-manager/
+Vcs-Browser: https://github.com/Yubico/yubikey-piv-manager-dpkg
+Vcs-Git: git://github.com/Yubico/yubikey-piv-manager-dpkg.git
+
+Package: yubikey-piv-manager
+Architecture: all
+Depends: yubico-piv-tool (>= 0.1.6),
+         ${misc:Depends},
+         ${python:Depends}
+Description: Graphical tool for managing your PIV-enabled YubiKey
+ This tool is used for performing administrative tasks on a PIV-enabled
+ YubiKey. It allows management of PIN, PUK, as well as the Management Key,
+ and can be used to generate and/or import keys and certificates.
