@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=YubiKey PIV Manager
+GenericName=YubiKey PIV Manager
+Comment=Tool for configuring your PIV-enabled YubiKey
+Exec=pivman
+Icon=pivman
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=YubiKey;PIV;Manager;

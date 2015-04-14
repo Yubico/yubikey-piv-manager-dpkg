@@ -1,0 +1,18 @@
+Metadata-Version: 1.1
+Name: yubikey-piv-manager
+Version: 1.0.0
+Summary: Tool for configuring your PIV-enabled YubiKey.
+Home-page: https://github.com/Yubico/yubikey-piv-manager
+Author: Yubico Open Source Maintainers
+Author-email: ossmaint@yubico.com
+License: GPLv3+
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: X11 Applications :: Qt
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Topic :: Security :: Cryptography
+Classifier: Topic :: Utilities

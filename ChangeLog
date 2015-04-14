@@ -1,0 +1,773 @@
+2015-04-14  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Updated version and NEWS for release.
+
+2015-04-14  Dain Nilsson <dain@yubico.com>
+
+	* MANIFEST.in: Add doc/*.adoc to manifest.
+
+2015-04-14  Dain Nilsson <dain@yubico.com>
+
+	* README: Use https for link in README.
+
+2015-04-14  Dain Nilsson <dain@yubico.com>
+
+	* doc/Settings_and_Group_Policy.adoc: Don't use horizontal
+	definition lists ;p
+
+2015-04-14  Dain Nilsson <dain@yubico.com>
+
+	* doc/Settings_and_Group_Policy.adoc: Use horizontal definition
+	lists.
+
+2015-04-14  Dain Nilsson <dain@yubico.com>
+
+	* doc/Device_Setup.adoc, doc/PIN_and_Management_Key.adoc: Fixed
+	typos in documentation.
+
+2015-04-13  Dain Nilsson <dain@yubico.com>
+
+	* doc/Settings_and_Group_Policy.adoc: Added missing spaces to
+	titles.
+
+2015-04-13  Dain Nilsson <dain@yubico.com>
+
+	* doc/Certificates.adoc, doc/Device_Setup.adoc,
+	doc/PIN_and_Management_Key.adoc, doc/Settings_and_Group_Policy.adoc: 
+	Added documentation.
+
+2015-04-13  Dain Nilsson <dain@yubico.com>
+
+	* pivman/view/cert.py: Remove trailing "," from .pem extension in
+	export dialog.
+
+2015-04-10  Dain Nilsson <dain@yubico.com>
+
+	* pivman/view/main.py: Refresh after settings change.
+
+2015-04-10  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py, pivman/view/manage.py,
+	pivman/view/set_pin_dialog.py: Fix issue with crashing when changing
+	PIN.
+
+2015-04-09  Dain Nilsson <dain@yubico.com>
+
+	* scripts/pivman.1: Added man page.
+
+2015-04-09  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Added NEWS.
+
+2015-04-09  Dain Nilsson <dain@yubico.com>
+
+	* README.adoc: Added README.adoc symlink for Github.
+
+2015-04-09  Dain Nilsson <dain@yubico.com>
+
+	* README: Fix README.
+
+2015-04-09  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__init__.py: Bumped version to 0.3.0 after rename.
+
+2015-04-09  Dain Nilsson <dain@yubico.com>
+
+	* .gitignore, README, pivman/__init__.py, pivman/controller.py,
+	pivman/libloader.py, pivman/libykpiv.py, pivman/main.py,
+	pivman/messages.py, pivman/piv.py, pivman/piv_cmd.py,
+	pivman/storage.py, pivman/utils.py, pivman/view/__init__.py,
+	pivman/view/cert.py, pivman/view/generate_dialog.py,
+	pivman/view/init_dialog.py, pivman/view/main.py,
+	pivman/view/manage.py, pivman/view/set_key_dialog.py,
+	pivman/view/set_pin_dialog.py, pivman/view/settings_dialog.py,
+	pivman/view/utils.py, pivman/watcher.py, pivman/worker.py,
+	pivtool/__init__.py, pivtool/controller.py, pivtool/libloader.py,
+	pivtool/libykpiv.py, pivtool/main.py, pivtool/messages.py,
+	pivtool/piv.py, pivtool/piv_cmd.py, pivtool/storage.py,
+	pivtool/utils.py, pivtool/view/__init__.py, pivtool/view/cert.py,
+	pivtool/view/generate_dialog.py, pivtool/view/init_dialog.py,
+	pivtool/view/main.py, pivtool/view/manage.py,
+	pivtool/view/set_key_dialog.py, pivtool/view/set_pin_dialog.py,
+	pivtool/view/settings_dialog.py, pivtool/view/utils.py,
+	pivtool/watcher.py, pivtool/worker.py, qt_resources.py,
+	resources/pivman.desktop, resources/pivman.nsi,
+	resources/pivman.spec, resources/pivtool.desktop,
+	resources/pivtool.nsi, resources/pivtool.spec, scripts/pivman,
+	scripts/pivtool, setup.py: Rename of project.
+
+2015-04-09  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/piv.py, pivtool/piv_cmd.py: Only try to set CHUID on init
+	and authentication.
+
+2015-04-08  Dain Nilsson <dain@yubico.com>
+
+	* README, pivtool/model/__init__.py, resources/pivtool.desktop,
+	setup.py: Updated packaging.
+
+2015-04-08  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/cert.py, pivtool/view/main.py,
+	pivtool/view/manage.py: Better window sizing for other OSes.
+
+2015-04-08  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/piv_cmd.py, resources/pivtool.spec: Search path and base
+	directory for cli.
+
+2015-04-07  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/piv.py, pivtool/view/main.py: Use
+	read_version for poll instead of read CHUID.
+
+2015-04-01  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/view/cert.py,
+	pivtool/view/utils.py: Remove help button from input dialogs.
+
+2015-04-01  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/cert.py, pivtool/view/generate_dialog.py,
+	pivtool/view/init_dialog.py, pivtool/view/manage.py,
+	pivtool/view/set_key_dialog.py, pivtool/view/set_pin_dialog.py,
+	pivtool/view/settings_dialog.py, pivtool/view/utils.py: Use custom
+	subclass of QDialog.
+
+2015-04-01  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py: Remove unused settings.
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/generate_dialog.py: Fix locked algorithm.
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py, pivtool/view/generate_dialog.py: Use list of
+	out formats instead of individual switches.
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/view/cert.py,
+	pivtool/view/generate_dialog.py, pivtool/view/init_dialog.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/settings_dialog.py,
+	pivtool/watcher.py: Use settings[] instead of settings.get()
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py, pivtool/view/init_dialog.py,
+	pivtool/view/manage.py: Remember pin_as_key choice for
+	initialization.
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/storage.py, pivtool/view/cert.py,
+	pivtool/view/generate_dialog.py, pivtool/view/settings_dialog.py,
+	pivtool/view/utils.py: Remember previous choices for generate key.
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/manage.py: Disable set_key button when PIN is key and
+	PIN is blocked.
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/generate_dialog.py: Warn if CA
+	can't be reached.
+
+2015-03-31  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/cert.py: Read files in binary mode.
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py, pivtool/utils.py,
+	pivtool/view/generate_dialog.py, pivtool/view/settings_dialog.py: 
+	Replace HAS_CA with has_ca().
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py, pivtool/view/generate_dialog.py: Added policy
+	setting for subject.
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py, pivtool/view/cert.py: Added setting to
+	disallow "Import from file..."
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/storage.py,
+	pivtool/view/generate_dialog.py: Added policy settings for out
+	format.
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/main.py, pivtool/piv.py, pivtool/piv_cmd.py,
+	pivtool/storage.py, pivtool/view/cert.py,
+	pivtool/view/settings_dialog.py, pivtool/view/utils.py,
+	pivtool/watcher.py: pyformat.
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/main.py, pivtool/messages.py, pivtool/storage.py,
+	pivtool/view/cert.py, pivtool/view/generate_dialog.py,
+	pivtool/view/init_dialog.py, pivtool/view/main.py,
+	pivtool/view/manage.py, pivtool/view/settings_dialog.py,
+	pivtool/view/utils.py: UI tweaks.
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/cert.py, pivtool/view/main.py, pivtool/view/manage.py,
+	pivtool/watcher.py: Complete device reset.
+
+2015-03-30  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py: Fix reading boolean settings.
+
+2015-03-28  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py, pivtool/view/generate_dialog.py,
+	pivtool/view/manage.py: Add setting for force algorithm.
+
+2015-03-28  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/piv.py: Detect PUK blocked.
+
+2015-03-28  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/storage.py, pivtool/view/cert.py,
+	pivtool/view/init_dialog.py, pivtool/view/manage.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/settings_dialog.py: Add
+	defaults to settings, and setting for shown certs.
+
+2015-03-28  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/generate_dialog.py: Remove
+	Public Key as output form.
+
+2015-03-27  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/view/generate_dialog.py,
+	pivtool/view/main.py, pivtool/view/manage.py,
+	pivtool/view/set_pin_dialog.py: Adding Reset PIN and Reset Device.
+
+2015-03-27  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/set_pin_dialog.py: Fix problem when changing PIN with
+	separate Key.
+
+2015-03-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/generate_dialog.py: Create elements even when not
+	displaying them.
+
+2015-03-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/piv.py, pivtool/utils.py,
+	pivtool/view/cert.py, pivtool/view/manage.py,
+	pivtool/view/set_pin_dialog.py: More code cleanups.
+
+2015-03-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/main.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/utils.py, pivtool/view/cert.py,
+	pivtool/view/generate_dialog.py, pivtool/view/main.py,
+	pivtool/view/set_key_dialog.py: Formatting cleanups.
+
+2015-03-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/utils.py, pivtool/view/cert.py,
+	pivtool/view/generate_dialog.py: Rewrote key generation.
+
+2015-03-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/piv.py, pivtool/piv_cmd.py,
+	pivtool/view/cert.py, pivtool/view/main.py: Read slot status from
+	CLI.
+
+2015-03-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Fix incorrect call to generate_key.
+
+2015-03-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/set_key_dialog.py: Better PIN prompting.
+
+2015-03-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/view/main.py,
+	pivtool/view/set_pin_dialog.py: Better handling of wrong PIN.
+
+2015-03-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/piv.py, pivtool/view/cert.py,
+	pivtool/view/utils.py, pivtool/worker.py: Verify and fail fast on
+	PIN entry.
+
+2015-03-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/worker.py: Removed help button from busy dialog.
+
+2015-03-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/cert.py, pivtool/view/init_dialog.py,
+	pivtool/view/manage.py, pivtool/view/set_key_dialog.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/settings_dialog.py: 
+	Remove help button from dialogs.
+
+2015-03-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/utils.py: Fix HAS_CA again.
+
+2015-03-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/utils.py, pivtool/view/cert.py,
+	pivtool/view/settings_dialog.py: Rename HAS_AD -> HAS_CA
+
+2015-03-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/cert.py: Add descriptions to
+	empty PIV slots.
+
+2015-03-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/utils.py: Use certutil -dump for CA detection.
+
+2015-03-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/main.py, pivtool/worker.py: Release references to
+	callbacks after invocation.
+
+2015-03-20  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/utils.py, pivtool/view/cert.py,
+	pivtool/view/init_dialog.py, pivtool/view/main.py,
+	pivtool/view/manage.py, pivtool/view/set_key_dialog.py,
+	pivtool/view/set_pin_dialog.py, pivtool/watcher.py,
+	pivtool/worker.py: Better locking and polling of device.
+
+2015-03-18  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Invalidate PUK if not given during init.
+
+2015-03-18  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/main.py, pivtool/messages.py, pivtool/view/cert.py: Fix
+	messages.
+
+2015-03-18  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/view/cert.py: 
+	Generate key.
+
+2015-03-18  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/libykpiv.py, pivtool/piv.py: Fix some lib issues.
+
+2015-03-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/main.py: Close application if PIN expired and not
+	changed.
+
+2015-03-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/set_key_dialog.py,
+	pivtool/view/settings_dialog.py: Warn when blocking PUK.
+
+2015-03-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/main.py, pivtool/view/manage.py: 
+	Handle blocked PUK.
+
+2015-03-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/view/cert.py,
+	pivtool/view/init_dialog.py, pivtool/view/main.py,
+	pivtool/view/manage.py, pivtool/view/set_key_dialog.py,
+	pivtool/view/set_pin_dialog.py: Added key management.
+
+2015-03-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/view/cert.py: Improved file import.
+
+2015-03-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/main.py: Use locking when refreshing the controller.
+
+2015-03-16  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/view/cert.py: Support more file import
+	formats.
+
+2015-03-16  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/cert.py: Show expired dates in red.
+
+2015-03-16  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/view/cert.py: Import from PFX.
+
+2015-03-16  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/view/cert.py, pivtool/view/status.py: 
+	Delete certificates.
+
+2015-03-16  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/cert.py: Export certificate.
+
+2015-03-16  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/cert.py: Display installed certificates.
+
+2015-03-13  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/cert.py: Added Certificates
+	placeholder.
+
+2015-03-13  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/cert.py, pivtool/view/main.py,
+	pivtool/view/manage.py: Set size with single command.
+
+2015-03-13  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/__init__.py, pivtool/controller.py, pivtool/messages.py,
+	pivtool/piv.py, pivtool/view/cert.py, pivtool/view/main.py,
+	pivtool/view/manage.py, pivtool/view/status.py: Replaced
+	StatusDialog with MainWidget.
+
+2015-03-13  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py,
+	pivtool/view/settings_dialog.py, pivtool/view/status.py: Added
+	settings for PIN expiration.
+
+2015-03-12  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py,
+	pivtool/view/status.py: Display number of days until PIN expires.
+
+2015-03-12  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/storage.py,
+	pivtool/view/set_pin_dialog.py: Only store PIN timestamp if
+	expiration is enforced.
+
+2015-03-12  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/view/status.py: Use QSslCertificate
+	instead of pyasn1.
+
+2015-03-10  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/utils.py, pivtool/view/settings_dialog.py,
+	pivtool/view/status.py: Check if AD is available for AD specific
+	options.
+
+2015-03-10  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/storage.py,
+	pivtool/view/settings_dialog.py, pivtool/view/status.py: Added
+	setting for CertificateTemplate.
+
+2015-03-10  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/storage.py,
+	pivtool/view/init_dialog.py, pivtool/view/main.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/settings_dialog.py,
+	pivtool/view/utils.py: Added settings.
+
+2015-03-09  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/storage.py: Add read-only overlay to settings.
+
+2015-03-09  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/storage.py, pivtool/view/main.py: 
+	Improve settings.
+
+2015-03-09  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/storage.py, pivtool/view/main.py: 
+	Wrap QSettings in more Pythonic class.
+
+2015-03-06  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/init_dialog.py, pivtool/view/utils.py: Remove password
+	and overhaul init dialog.
+
+2015-03-05  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/init_dialog.py,
+	pivtool/view/main.py: Validate init dialog data.
+
+2015-03-05  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/set_pin_dialog.py: Don't prompt for PIN twice on set
+	PIN.
+
+2015-03-05  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Fix legacy data.
+
+2015-03-05  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/__init__.py, pivtool/controller.py, pivtool/messages.py,
+	pivtool/view/main.py: Poll for device automatically.
+
+2015-03-04  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Migrate data saved using older version of
+	app.
+
+2015-03-04  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py,
+	pivtool/view/init_dialog.py, pivtool/view/set_pin_dialog.py,
+	pivtool/view/status.py, pivtool/view/utils.py, pivtool/worker.py: 
+	Prompt for management key on main thread.
+
+2015-03-04  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Better text for management password prompt.
+
+2015-03-04  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py,
+	pivtool/view/init_dialog.py: Passphrase -> Password.
+
+2015-03-04  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/init_dialog.py: Better authentication logic.
+
+2015-03-03  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Prompt for passphrase/key when needed.
+
+2015-03-03  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/view/main.py: Add window to
+	controller.
+
+2015-03-03  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/view/init_dialog.py,
+	pivtool/view/initialize.py, pivtool/view/main.py,
+	pivtool/view/settings_dialog.py: New init dialog.
+
+2015-03-04  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Avoid writing data when unchanged.
+
+2015-03-03  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/set_pin_dialog.py: Fix message for non-forced pin
+	dialog.
+
+2015-03-03  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/libykpiv.py, pivtool/piv.py,
+	pivtool/piv_cmd.py, pivtool/utils.py, pivtool/view/status.py: Use
+	single ojbect for pivtool data.
+
+2015-03-02  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/piv.py, pivtool/utils.py: Improved
+	cert reading.
+
+2015-02-27  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/status.py: Move properties to controller.  Prompt for
+	CertificateTemplate.
+
+2015-02-27  Dain Nilsson <dain@yubico.com>
+
+	* : Added app icon.
+
+2015-02-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Better error for failed certreq call.
+
+2015-02-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/initialize.py, pivtool/view/set_pin_dialog.py: 
+	Cleanups.
+
+2015-02-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/initialize.py, pivtool/view/main.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/status.py,
+	pivtool/worker.py: Better handling of errors.
+
+2015-02-26  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py,
+	pivtool/view/status.py: Better message for no cert loaded.
+
+2015-02-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, resources/pivtool.nsi: 
+	Do a PIN expiry check on startup.
+
+2015-02-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: certreq needs to display prompt.
+
+2015-02-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/piv_cmd.py: Don't show console for
+	external commands.
+
+2015-02-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/utils.py: test utility function.
+
+2015-02-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py: Save the certificate to a non-existing
+	file.
+
+2015-02-25  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/main.py, pivtool/piv.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/status.py: Read
+	expiration of certificates.
+
+2015-02-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/main.py: Add explicit imports for Pyinstaller to work.
+
+2015-02-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/main.py: Improved PIN expiry check.
+
+2015-02-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/main.py, pivtool/view/main.py: Add -c for PIN expiration
+	check only.
+
+2015-02-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/view/main.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/status.py: Force PIN
+	change if expired.
+
+2015-02-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/piv.py, pivtool/view/initialize.py: 
+	Invalidate PUK on initialization.
+
+2015-02-24  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/utils.py, pivtool/view/initialize.py, pivtool/view/main.py,
+	pivtool/view/set_pin_dialog.py: Initialize devices with default
+	authentication key.
+
+2015-02-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/utils.py, pivtool/view/status.py: Add
+	warning before requesting certificate.
+
+2015-02-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/utils.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/status.py,
+	pivtool/worker.py: Add pin complexity.
+
+2015-02-23  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/controller.py, pivtool/messages.py,
+	pivtool/model/controller.py, pivtool/view/main.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/status.py,
+	pivtool/worker.py: More stuff.
+
+2015-02-21  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/main.py, pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/status.py, pivtool/worker.py: Added Worker for
+	background tasks.
+
+2015-02-20  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/model/controller.py, pivtool/utils.py,
+	pivtool/view/set_pin_dialog.py: Store salt in applet.
+
+2015-02-20  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/model/controller.py, pivtool/piv.py, pivtool/utils.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/status.py: Handle
+	unicode PINs.
+
+2015-02-20  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/model/__init__.py, pivtool/model/controller.py,
+	pivtool/piv.py, pivtool/piv_cmd.py, pivtool/utils.py,
+	pivtool/view/main.py, pivtool/view/set_pin_dialog.py,
+	pivtool/view/status.py: Derive management key from PIN.
+
+2015-02-19  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/piv.py,
+	pivtool/view/set_pin_dialog.py, pivtool/view/status.py,
+	resources/pivtool.spec: Add Change PIN dialog.
+
+2015-02-19  Dain Nilsson <dain@yubico.com>
+
+	* resources/pivtool.spec: Allow .exes in lib/
+
+2015-02-19  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/libykpiv.py, resources/pivtool.nsi: Fixes.
+
+2015-02-18  Dain Nilsson <dain@yubico.com>
+
+	* MANIFEST.in: Added manifest.
+
+2015-02-18  Dain Nilsson <dain@yubico.com>
+
+	* resources/pivtool.nsi, resources/pivtool.spec, resources/qt.conf: 
+	Added installer stuff.
+
+2015-02-18  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/messages.py, pivtool/piv.py, pivtool/view/main.py,
+	pivtool/view/status.py: Added some UI.
+
+2015-02-18  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/libykpiv.py, pivtool/piv.py, pivtool/piv_cmd.py,
+	pivtool/ykpiv.py, scripts/pivtool: More features.
+
+2015-02-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/piv.py, pivtool/piv_cmd.py, pivtool/ykpiv.py: Added stuff.
+
+2015-02-17  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/libloader.py, pivtool/ykpiv.py: Added ykpiv ctypes.
+
+2015-02-13  Dain Nilsson <dain@yubico.com>
+
+	* pivtool/view/main.py: Give window min width/height.
+
+2015-02-13  Dain Nilsson <dain@yubico.com>
+
+	* Initial skeleton.
+
