@@ -2,5 +2,5 @@
   section="Applications/System/Administration"\
   title="YubiKey PIV Manager" \
   command="/usr/bin/pivman" \
-  longtitle="Graphical interface for YubiKey PIV management" \
+  longtitle="Graphical tool for configuring your PIV-enabled YubiKey" \
   icon="/usr/share/pixmaps/pivman.xpm"

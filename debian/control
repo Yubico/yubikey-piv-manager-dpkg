@@ -21,6 +21,7 @@ Architecture: all
 Depends: yubico-piv-tool (>= 0.1.6),
          ${misc:Depends},
          ${python:Depends}
+Recommends: pcscd
 Description: Graphical tool for managing your PIV-enabled YubiKey
  This tool is used for performing administrative tasks on a PIV-enabled
  YubiKey. It allows management of PIN, PUK, as well as the Management Key,
