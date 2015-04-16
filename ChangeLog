@@ -1,3 +1,37 @@
+2015-04-16  Dain Nilsson <dain@yubico.com>
+
+	* MANIFEST.in: Add screenshot.png to release tar.
+
+2015-04-16  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Updated NEWS and version for release.
+
+2015-04-16  Dain Nilsson <dain@yubico.com>
+
+	* pivman/view/cert.py, pivman/view/manage.py: Don't move windows
+	after creating them.
+
+2015-04-16  Dain Nilsson <dain@yubico.com>
+
+	* qt_resources.py, release.py: Re-license release.py and
+	qt_resources.py
+
+2015-04-15  Henrik Stråth <henrik.strath@gmail.com>
+
+	* README: Added screenshot to README
+
+2015-04-15  Dain Nilsson <dain@yubico.com>
+
+	* resources/pivman.pkgproj: Added Packages project for OSX.
+
+2015-04-15  Dain Nilsson <dain@yubico.com>
+
+	* resources/pivman.xpm: Added XPM icon.
+
+2015-04-15  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py: Removed unused function.
+
 2015-04-14  Dain Nilsson <dain@yubico.com>
 
 	* NEWS, pivman/__init__.py: Updated version and NEWS for release.

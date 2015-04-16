@@ -5,6 +5,7 @@ NEWS
 README
 qt_resources.py
 release.py
+screenshot.png
 setup.py
 doc/Certificates.adoc
 doc/Device_Setup.adoc
@@ -40,7 +41,9 @@ resources/pivman.desktop
 resources/pivman.icns
 resources/pivman.ico
 resources/pivman.nsi
+resources/pivman.pkgproj
 resources/pivman.spec
+resources/pivman.xpm
 resources/qt.conf
 scripts/pivman
 scripts/pivman.1
