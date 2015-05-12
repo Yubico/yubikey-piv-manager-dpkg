@@ -1,3 +1,3 @@
 version=3
 opts=pgpsigurlmangle=s/$/.sig/ \
-  https://developers.yubico.com/yubikey-piv-manager/releases.html .*/yubikey-piv-manager-(\d[\d.]*)\.(?:zip|tgz|tbz2|txz|tar\.gz|tar\.bz2|tar\.xz)
+  https://developers.yubico.com/yubikey-piv-manager/Releases/ yubikey-piv-manager-(.*)\.tar\.gz
