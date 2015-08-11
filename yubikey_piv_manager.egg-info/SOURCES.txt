@@ -36,6 +36,7 @@ pivman/view/settings_dialog.py
 pivman/view/utils.py
 qt_resources/pivman.png
 resources/installer_bg.png
+resources/osx-patch-ccid
 resources/pivman-large.png
 resources/pivman.desktop
 resources/pivman.icns
