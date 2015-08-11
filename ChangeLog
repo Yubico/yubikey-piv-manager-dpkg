@@ -1,3 +1,29 @@
+2015-05-18  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Update NEWS and version.
+
+2015-05-18  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/view/main.py: Don't save window position.
+
+2015-05-18  Dain Nilsson <dain@yubico.com>
+
+	* resources/pivman.nsi, resources/pivman.spec: Updated Windows
+	packaging files.
+
+2015-05-08  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/piv.py: Fix default card reader pattern.
+
+2015-04-24  Dain Nilsson <dain@yubico.com>
+
+	* resources/osx-patch-ccid, resources/pivman.pkgproj: Add CCID patch
+	to OS X installer.
+
+2015-04-22  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py: Rename constant.
+
 2015-04-16  Dain Nilsson <dain@yubico.com>
 
 	* MANIFEST.in: Add screenshot.png to release tar.
