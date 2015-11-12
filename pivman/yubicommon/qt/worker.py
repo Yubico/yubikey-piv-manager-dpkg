@@ -24,11 +24,16 @@
 # non-source form of such a combination shall include the source code
 # for the parts of OpenSSL used as well as that of the covered work.
 
+from __future__ import absolute_import
+
 from PySide import QtGui, QtCore
 from functools import partial
-from pivman import messages as m
-from pivman.view.utils import get_active_window
+from .utils import get_active_window, default_messages
 import traceback
+
+
+class _Messages(object):
+    wait = 'Please wait...'
 
 
 class _Event(QtCore.QEvent):
@@ -43,12 +48,13 @@ class _Event(QtCore.QEvent):
         del self._callback
 
 
-class QtWorker(QtCore.QObject):
+class Worker(QtCore.QObject):
     _work_signal = QtCore.Signal(tuple)
     _work_done_0 = QtCore.Signal()
 
-    def __init__(self, window):
-        super(QtWorker, self).__init__()
+    @default_messages(_Messages)
+    def __init__(self, window, m):
+        super(Worker, self).__init__()
 
         self.window = window
 
@@ -78,6 +84,12 @@ class QtWorker(QtCore.QObject):
             fn = partial(fn[0], *fn[1:])
         self._work_signal.emit((fn, callback, return_errors))
 
+    def post_fg(self, fn):
+        if isinstance(fn, tuple):
+            fn = partial(fn[0], *fn[1:])
+        event = _Event(fn)
+        QtGui.QApplication.postEvent(self.window, event)
+
     @QtCore.Slot(tuple)
     def work(self, job):
         QtCore.QThread.msleep(10)  # Needed to yield
@@ -93,5 +105,3 @@ class QtWorker(QtCore.QObject):
             event = _Event(partial(callback, result))
             QtGui.QApplication.postEvent(self.window, event)
         self._work_done_0.emit()
-
-Worker = QtWorker

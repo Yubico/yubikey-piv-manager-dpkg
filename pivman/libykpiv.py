@@ -26,7 +26,7 @@
 
 from ctypes import (Structure, POINTER, c_int, c_ubyte, c_char_p, c_long,
                     c_ulong, c_size_t)
-from pivman.libloader import load_library
+from pivman.yubicommon.ctypes import load_library
 
 _lib = load_library('ykpiv', '1')
 
@@ -70,6 +70,7 @@ YKPIV_ALGO_3DES = 0x03
 YKPIV_ALGO_RSA1024 = 0x06
 YKPIV_ALGO_RSA2048 = 0x07
 YKPIV_ALGO_ECCP256 = 0x11
+YKPIV_ALGO_ECCP384 = 0x14
 
 ykpiv_state = type('ykpiv_state', (Structure,), {})
 ykpiv_rc = c_int

@@ -100,6 +100,10 @@ class YkPivCmd(object):
         while new_args:
             full_args = set_arg(full_args, new_args.pop(0), new_args.pop(0))
 
+        if '-k' in full_args:  # Workaround for passing key in 1.1.0
+            i = full_args.index('-k')
+            full_args = full_args[:i] + ['-k' + full_args[i+1]] \
+                + full_args[i+2:]
         p = subprocess.Popen(full_args, stdin=subprocess.PIPE,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                              startupinfo=startupinfo)
@@ -124,8 +128,10 @@ class YkPivCmd(object):
         self.run('-a', 'unblock-pin', '-P', puk, '-N', new_pin)
         self.set_arg('-P', new_pin)
 
-    def generate(self, slot, algorithm):
-        return self.run('-s', slot, '-a', 'generate', '-A', algorithm)
+    def generate(self, slot, algorithm, pin_policy, touch_policy):
+        return self.run('-s', slot, '-a', 'generate', '-A', algorithm,
+                        '--pin-policy', pin_policy, '--touch-policy',
+                        'always' if touch_policy else 'never')
 
     def create_csr(self, subject, pem, slot):
         if '-P' not in self._base_args:
@@ -142,13 +148,15 @@ class YkPivCmd(object):
     def import_cert(self, data, slot, frmt='PEM', password=None):
         return self._do_import('import-cert', data, slot, frmt, password)
 
-    def import_key(self, data, slot, frmt='pem', password=None):
-        return self._do_import('import-key', data, slot, frmt, password)
+    def import_key(self, data, slot, frmt, password, pin_policy, touch_policy):
+        return self._do_import('import-key', data, slot, frmt, password,
+                               '--pin-policy', pin_policy, '--touch-policy',
+                               'always' if touch_policy else 'never')
 
-    def _do_import(self, action, data, slot, frmt, password):
+    def _do_import(self, action, data, slot, frmt, password, *args):
         if '-k' not in self._base_args:
             raise ValueError('Management key has not been provided')
-        args = ['-s', slot, '-K', frmt, '-a', action]
+        args = ['-s', slot, '-K', frmt, '-a', action] + list(args)
         if password is not None:
             args.extend(['-p', password])
         return self.run(*args, input=data)
