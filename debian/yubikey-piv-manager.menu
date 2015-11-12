@@ -1,6 +1,0 @@
-?package(yubikey-piv-manager):needs="X11" \
-  section="Applications/System/Administration"\
-  title="YubiKey PIV Manager" \
-  command="/usr/bin/pivman" \
-  longtitle="Graphical tool for configuring your PIV-enabled YubiKey" \
-  icon="/usr/share/pixmaps/pivman.xpm"
