@@ -1,0 +1,17 @@
+Description: Remove PySide requirement, since python-pyside does not register itself correctly
+Author: Dain Nilsson <dain@yubico.com>
+Forwarded: no
+--- a/setup.py
++++ b/setup.py
+@@ -42,8 +42,9 @@
+     entry_points={
+         'gui_scripts': ['pivman=pivman.__main__:main']
+     },
+-    install_requires=['PySide', 'pycrypto'],
+-    yc_requires=['ctypes', 'qt'],
++    install_requires=['pycrypto'],
++    yc_requires=['ctypes'],
++    packages=['pivman', 'pivman.view', 'pivman.yubicommon', 'pivman.yubicommon.setup', 'pivman.yubicommon.ctypes', 'pivman.yubicommon.qt'],
+     test_suite='nose.collector',
+     tests_require=[''],
+     cmdclass={'executable': executable, 'qt_resources': qt_resources('pivman')},
