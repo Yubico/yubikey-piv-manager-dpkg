@@ -1,8 +1,10 @@
-yubikey-piv-manager (1.1.0-1) unstable; urgency=low
+yubikey-piv-manager (1.1.1-1) unstable; urgency=low
 
   * New upstream version.
+  * Patch to work around python-pyside not being detected.
+  * Remvoed .menu file.
 
- -- Dain Nilsson <dain@yubico.com>  Thu, 12 Nov 2015 17:21:47 +0100
+ -- Dain Nilsson <dain@yubico.com>  Mon, 16 Nov 2015 10:16:47 +0100
 
 yubikey-piv-manager (1.0.2-1) unstable; urgency=low
 
