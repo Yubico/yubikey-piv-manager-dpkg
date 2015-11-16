@@ -1,3 +1,31 @@
+2015-11-16  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Update version and NEWS for release.
+
+2015-11-13  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS.
+
+2015-11-13  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py, pivman/piv.py, pivman/view/cert.py,
+	pivman/view/generate_dialog.py, pivman/view/init_dialog.py,
+	pivman/view/set_key_dialog.py, pivman/view/set_pin_dialog.py: 
+	Attempt to reconnect to device if lost before using.
+
+2015-11-12  Dain Nilsson <dain@yubico.com>
+
+	* README: Updated executable build instructions in README.
+
+2015-11-12  Dain Nilsson <dain@yubico.com>
+
+	* resources/osx-installer.pkgproj, resources/win-installer.nsi: 
+	Updated Win/OSX installers.
+
+2015-11-12  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Bumped version post release.
+
 2015-11-12  Dain Nilsson <dain@yubico.com>
 
 	* NEWS, pivman/__init__.py: Prepare release.
