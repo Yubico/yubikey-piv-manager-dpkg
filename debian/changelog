@@ -1,8 +1,12 @@
 yubikey-piv-manager (1.1.1-1) unstable; urgency=low
 
+  [ Dain Nilsson ]
   * New upstream version.
   * Patch to work around python-pyside not being detected.
-  * Remvoed .menu file.
+  * Removed .menu file.
+
+  [ Simon Josefsson ]
+  * Update upstream-signing-key.
 
  -- Dain Nilsson <dain@yubico.com>  Mon, 16 Nov 2015 10:16:47 +0100
 
