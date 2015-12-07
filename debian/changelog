@@ -1,3 +1,9 @@
+yubikey-piv-manager (1.2.0-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Dain Nilsson <dain@yubico.com>  Mon, 07 Dec 2015 12:12:33 +0100
+
 yubikey-piv-manager (1.1.1-1) unstable; urgency=low
 
   [ Dain Nilsson ]
