@@ -1,3 +1,40 @@
+2015-12-07  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Prepare release.
+
+2015-12-07  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Bump version.
+
+2015-12-07  Dain Nilsson <dain@yubico.com>
+
+	* doc/Settings_and_Group_Policy.adoc: Update documentation for new
+	settings.
+
+2015-12-07  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/storage.py, pivman/view/cert.py,
+	pivman/view/generate_dialog.py, pivman/view/usage_policy_dialog.py,
+	vendor/yubicommon: Made PIN/Touch policy options configurable, and
+	disabled by default.
+
+2015-12-07  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__main__.py: Ensure only a single instance of the
+	application.
+
+2015-12-02  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS.
+
+2015-12-02  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__init__.py: Bumped version.
+
+2015-12-02  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__main__.py, vendor/yubicommon: Added package version.
+
 2015-11-16  Dain Nilsson <dain@yubico.com>
 
 	* NEWS, pivman/__init__.py: Update version and NEWS for release.
