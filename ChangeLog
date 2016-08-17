@@ -1,3 +1,16 @@
+2015-12-08  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__init__.py: Bumped version.
+
+2015-12-08  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/controller.py: Improved error message for too large
+	certs.
+
+2015-12-08  Dain Nilsson <dain@yubico.com>
+
+	* vendor/yubicommon: Updated yubicommon.
+
 2015-12-07  Dain Nilsson <dain@yubico.com>
 
 	* NEWS, pivman/__init__.py: Prepare release.
