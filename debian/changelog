@@ -1,6 +1,8 @@
 yubikey-piv-manager (1.2.1-1) unstable; urgency=low
 
   * New upstream version.
+  * Use https URLs in Vcs-Git.
+  * Update Standards-Version from 3.9.6 to 3.9.8.
 
  -- Simon Josefsson <simon@josefsson.org>  Wed, 17 Aug 2016 12:26:15 +0200
 

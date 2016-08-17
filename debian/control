@@ -10,11 +10,11 @@ Build-Depends: debhelper (>= 9),
                python (>= 2.7),
                python-nose,
                python-setuptools (>= 0.6b3)
-Standards-Version: 3.9.6
+Standards-Version: 3.9.8
 X-Python-Version: >= 2.7
 Homepage: https://developers.yubico.com/yubikey-piv-manager/
 Vcs-Browser: https://github.com/Yubico/yubikey-piv-manager-dpkg
-Vcs-Git: git://github.com/Yubico/yubikey-piv-manager-dpkg.git
+Vcs-Git: https://github.com/Yubico/yubikey-piv-manager-dpkg.git
 
 Package: yubikey-piv-manager
 Architecture: all
