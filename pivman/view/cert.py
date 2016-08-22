@@ -55,17 +55,21 @@ FILE_FILTER = 'Certificate/key files ' \
 def detect_type(data, fn):
     suffix = '.' in fn and fn.lower().rsplit('.', 1)[1]
     f_format = None  # pfx, pem or der
-    f_type = 0  # 1 for certificate, 2 for key
+    f_type = 0  # 1 for certificate, 2 for key, 3 for both
     needs_password = False
     if suffix in ['pfx', 'p12']:
         f_format = 'pfx'
         needs_password = True
     else:
-        f_format = 'pem' if data.startswith('-----') else 'der'
+        f_format = 'pem' if data.startswith(b'-----') else 'der'
         if f_format == 'pem':
-            first_line = data.splitlines()[0]
-            f_type = 1 if 'CERTIFICATE' in first_line else 2
-            needs_password = 'ENCRYPTED' in first_line
+            if b'CERTIFICATE' in data and b'PRIVATE KEY' in data:
+                f_type = 3
+            elif b'PRIVATE KEY' in data:
+                f_type = 2
+            elif b'CERTIFICATE' in data:
+                f_type = 1
+            needs_password = b'ENCRYPTED' in data
         elif suffix in ['cer', 'crt']:
             f_type = 1
         elif suffix in ['key']:
@@ -95,6 +99,10 @@ def import_file(controller, slot, fn):
             if f_type == 1:
                 controller.import_certificate(data, slot, 'PEM', password)
             elif f_type == 2:
+                controller.import_key(data, slot, 'PEM', password, pin_policy,
+                                      touch_policy)
+            elif f_type == 3:
+                controller.import_certificate(data, slot, 'PEM', password)
                 controller.import_key(data, slot, 'PEM', password, pin_policy,
                                       touch_policy)
         else:
@@ -157,7 +165,7 @@ class CertPanel(QtGui.QWidget):
         if not fn:
             return
 
-        with open(fn, 'w') as f:
+        with open(fn, 'wb') as f:
             f.write(cert.toPem().data())
         QtGui.QMessageBox.information(self, m.cert_exported,
                                       m.cert_exported_desc_1 % fn)

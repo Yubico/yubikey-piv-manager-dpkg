@@ -24,12 +24,16 @@
 # non-source form of such a combination shall include the source code
 # for the parts of OpenSSL used as well as that of the covered work.
 
+from __future__ import print_function
 from PySide import QtGui, QtCore
 from pivman.controller import Controller
 from pivman.piv import YkPiv, PivError, DeviceGoneError
 from pivman.storage import settings, SETTINGS
 from functools import partial
-from Queue import Queue
+try:
+    from Queue import Queue
+except ImportError:
+    from queue import Queue
 
 
 class Release(object):
@@ -87,7 +91,7 @@ class ControllerWatcher(QtCore.QObject):
             self._controller = Controller(YkPiv(reader=reader))
             self._device_found.emit()
         except (PivError, DeviceGoneError) as e:
-            print e
+            print(e)
 
     def on_found(self, fn, hold_lock=False):
         self._device_found.connect(self.wrap(fn, hold_lock))

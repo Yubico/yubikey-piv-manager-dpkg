@@ -68,8 +68,7 @@ change_name_desc = "Change the name of the device."
 current_pin_label = "Current PIN:"
 current_puk_label = "Current PUK:"
 current_key_label = "Current Management Key:"
-new_pin_label = "New PIN (4-8 characters):"
-new_complex_pin_label = "New PIN (6-8 characters):"
+new_pin_label = "New PIN (6-8 characters):"
 new_key_label = "New Management Key:"
 verify_pin_label = "Repeat new PIN:"
 pin = "PIN"
@@ -77,8 +76,7 @@ pin_label = "PIN:"
 pin_days_left_1 = "PIN expires in %s days."
 puk = "PUK"
 puk_label = "PUK:"
-new_puk_label = "PUK (4-8 characters):"
-new_complex_puk_label = "PUK (6-8 characters):"
+new_puk_label = "PUK (6-8 characters):"
 verify_puk_label = "Repeat PUK:"
 puk_confirm_mismatch = "PUKs don't match!"
 no_puk = "No PUK set"
@@ -156,8 +154,8 @@ unknown = "Unknown"
 change_cert = "Request certificate"
 change_cert_warning_1 = "This will generate a new private key and request a " \
     "certificate from the Windows CA, overwriting any previously stored " \
-    "credential in slot '%s' of your YubiKey's PIV applet. This action cannot " \
-    "be undone."
+    "credential in slot '%s' of your YubiKey's PIV applet. This action " \
+    "cannot be undone."
 changing_cert = "Requesting certificate..."
 export_to_file = "Export certificate..."
 export_cert = "Export certificate"
@@ -190,8 +188,8 @@ cert_deleted_desc = "Certificate deleted successfully"
 cert_not_loaded = "No certificate loaded."
 cert_expires_1 = "Certificate expires: %s"
 cert_installed = "Certificate installed"
-cert_installed_desc = "A new certificate has been installed. You will need " \
-    "to unplug, and re-insert your NEO before it can be used."
+cert_installed_desc = "A new certificate has been installed. You may need to " \
+    "unplug and re-insert your YubiKey before it can be used."
 cert_tmpl = "Certificate Template"
 subject = "Subject"
 error = "Error"
@@ -258,10 +256,6 @@ touch_needed_desc = "You have chosen to require user interaction to use this " \
     "will start slowly blinking. At that point please touch the button on " \
     "your YubiKey."
 touch_prompt = "Touch the button now..."
-
-
-def _translate(qt):
-    values = globals()
-    for key, value in values.items():
-        if isinstance(value, basestring) and not key.startswith('_'):
-            values[key] = qt.tr(value)
+auth_cert = "Authentication certificate"
+auth_cert_desc = "Generate a certificate for authentication"
+expiration_date = "Expiration date"

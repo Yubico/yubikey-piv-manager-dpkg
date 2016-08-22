@@ -29,10 +29,12 @@ from pivman.piv import PivError, WrongPinError
 from pivman.storage import settings, SETTINGS
 from pivman.view.utils import get_active_window, get_text
 from pivman import messages as m
+from pivman.yubicommon.compat import text_type, byte2int, int2byte
 from PySide import QtGui, QtNetwork
-from Crypto.Protocol.KDF import PBKDF2
-from Crypto.Random import get_random_bytes
 from datetime import timedelta
+from hashlib import pbkdf2_hmac
+from binascii import a2b_hex
+import os
 import re
 import time
 import struct
@@ -47,6 +49,10 @@ TAG_PIN_TIMESTAMP = 0x83  # When the PIN was last changed
 
 FLAG1_PUK_BLOCKED = 0x01  # PUK is blocked
 
+AUTH_SLOT = '9a'
+DEFAULT_SUBJECT = "/CN=Yubico PIV Authentication"
+AUTH_CERT_VALID_DAYS = 10950  # 30 years
+
 
 def parse_pivtool_data(raw_data):
     rest, _ = der_read(raw_data, TAG_PIVMAN_DATA)
@@ -58,35 +64,39 @@ def parse_pivtool_data(raw_data):
 
 
 def serialize_pivtool_data(data):  # NOTE: Doesn't support values > 0x80 bytes.
-    buf = ''.join([chr(k) + chr(len(v)) + v for k, v in sorted(data.items())])
-    return chr(TAG_PIVMAN_DATA) + chr(len(buf)) + buf
+    buf = b''
+    for k, v in sorted(data.items()):
+        buf += int2byte(k) + int2byte(len(v)) + v
+    return int2byte(TAG_PIVMAN_DATA) + int2byte(len(buf)) + buf
 
 
 def has_flag(data, flagkey, flagmask):
-    flags = ord(data.get(flagkey, chr(0)))
+    flags = byte2int(data.get(flagkey, b'\0')[0])
     return bool(flags & flagmask)
 
 
 def set_flag(data, flagkey, flagmask, value=True):
-    flags = ord(data.get(flagkey, chr(0)))
+    flags = byte2int(data.get(flagkey, b'\0')[0])
     if value:
         flags |= flagmask
     else:
         flags &= ~flagmask
-    data[flagkey] = chr(flags)
+    data[flagkey] = int2byte(flags)
 
 
 def derive_key(pin, salt):
     if pin is None:
         raise ValueError('PIN must not be None!')
-    if isinstance(pin, unicode):
+    if isinstance(pin, text_type):
         pin = pin.encode('utf8')
-    return PBKDF2(pin, salt, 24, 10000)
+    return pbkdf2_hmac('sha1', pin, salt, 10000, dklen=24)
 
 
 def is_hex_key(string):
-    return isinstance(string, basestring) and \
-        bool(re.compile(r'[a-fA-F0-9]{48}').match(string))
+    try:
+        return bool(re.compile(r'^[a-fA-F0-9]{48}$').match(string))
+    except:
+        return False
 
 
 class Controller(object):
@@ -97,7 +107,7 @@ class Controller(object):
         try:
             self._raw_data = self._key.fetch_object(YKPIV_OBJ_PIVMAN_DATA)
             # TODO: Remove in a few versions...
-            if self._raw_data[0] != chr(TAG_PIVMAN_DATA):
+            if byte2int(self._raw_data[0]) != TAG_PIVMAN_DATA:
                 self._data = {}
                 self._data[TAG_PIN_TIMESTAMP] = self._raw_data
                 self._data[TAG_SALT] = self._key.fetch_object(
@@ -128,7 +138,7 @@ class Controller(object):
 
     @property
     def version_tuple(self):
-        return tuple(map(int, self.version.split('.')))
+        return tuple(map(int, self.version.split(b'.')))
 
     @property
     def authenticated(self):
@@ -170,7 +180,7 @@ class Controller(object):
             window, m.enter_pin, m.pin_label, QtGui.QLineEdit.Password)
         if not status:
             raise ValueError('PIN entry aborted!')
-        return self.ensure_pin(pin)
+        return self.ensure_pin(pin, window)
 
     def ensure_authenticated(self, key=None, window=None):
         if self.authenticated or test(self.authenticate, catches=ValueError):
@@ -214,7 +224,7 @@ class Controller(object):
         if key is not None and salt is not None:
             key = derive_key(key, salt)
         elif is_hex_key(key):
-            key = key.decode('hex')
+            key = a2b_hex(key)
 
         self._authenticated = False
         if test(self._key.authenticate, key, catches=PivError):
@@ -228,15 +238,16 @@ class Controller(object):
     def _invalidate_puk(self):
         set_flag(self._data, TAG_FLAGS_1, FLAG1_PUK_BLOCKED)
         for i in range(8):  # Invalidate the PUK
-            test(self._key.set_puk, '', '', catches=ValueError)
+            test(self._key.set_puk, '', '000000', catches=ValueError)
 
-    def initialize(self, pin, puk=None, key=None, old_pin='123456',
+    def initialize(self, auth_cert, pin, puk=None, key=None, old_pin='123456',
                    old_puk='12345678'):
+
         if not self.authenticated:
             self.authenticate()
 
         if key is None:  # Derive key from PIN
-            self._data[TAG_SALT] = ''  # Used as a marker for change_pin
+            self._data[TAG_SALT] = b''  # Used as a marker for change_pin
         else:
             self.set_authentication(key)
             if puk is None:
@@ -246,13 +257,23 @@ class Controller(object):
 
         self.change_pin(old_pin, pin)
 
+        if auth_cert:
+            self.create_auth_cert(pin)
+
+    def create_auth_cert(self, pin):
+            generated_key = self.generate_key(AUTH_SLOT)
+            cert = self.selfsign_certificate(
+                AUTH_SLOT, pin, generated_key,
+                DEFAULT_SUBJECT, AUTH_CERT_VALID_DAYS)
+            self.import_certificate(cert, AUTH_SLOT)
+
     def set_authentication(self, new_key, is_pin=False):
         if not self.authenticated:
             raise ValueError('Not authenticated')
 
         if is_pin:
             self.verify_pin(new_key)
-            salt = get_random_bytes(16)
+            salt = os.urandom(16)
             key = derive_key(new_key, salt)
             self._data[TAG_SALT] = salt
             self._key.set_authentication(key)
@@ -262,7 +283,7 @@ class Controller(object):
                 self._invalidate_puk()
         else:
             if is_hex_key(new_key):
-                new_key = new_key.decode('hex')
+                new_key = a2b_hex(new_key)
 
             self._key.set_authentication(new_key)
             if self.pin_is_key:
@@ -271,8 +292,8 @@ class Controller(object):
         self._save_data()
 
     def change_pin(self, old_pin, new_pin):
-        if len(new_pin) < 4:
-            raise ValueError('PIN must be at least 4 characters')
+        if len(new_pin) < 6:
+            raise ValueError('PIN must be at least 6 characters')
         self.verify_pin(old_pin)
         if self.pin_is_key or self.does_pin_expire():
             self.ensure_authenticated(old_pin)
@@ -286,8 +307,8 @@ class Controller(object):
         self._save_data()
 
     def reset_pin(self, puk, new_pin):
-        if len(new_pin) < 4:
-            raise ValueError('PIN must be at least 4 characters')
+        if len(new_pin) < 6:
+            raise ValueError('PIN must be at least 6 characters')
         try:
             self._key.reset_pin(puk, new_pin)
         except WrongPinError as e:
@@ -298,8 +319,8 @@ class Controller(object):
     def change_puk(self, old_puk, new_puk):
         if self.puk_blocked:
             raise ValueError('PUK is disabled and cannot be changed')
-        if len(new_puk) < 4:
-            raise ValueError('PUK must be at least 4 characters')
+        if len(new_puk) < 6:
+            raise ValueError('PUK must be at least 6 characters')
         try:
             self._key.set_puk(old_puk, new_puk)
         except WrongPinError as e:
@@ -330,11 +351,12 @@ class Controller(object):
             raise ValueError('Not authenticated')
         return self._key.create_csr(subject, pubkey, slot)
 
-    def selfsign_certificate(self, slot, pin, pubkey, subject):
+    def selfsign_certificate(self, slot, pin, pubkey, subject, valid_days=365):
         self.verify_pin(pin)
         if not self.authenticated:
             raise ValueError('Not authenticated')
-        return self._key.create_selfsigned_cert(subject, pubkey, slot)
+        return self._key.create_selfsigned_cert(
+            subject, pubkey, slot, valid_days)
 
     def does_pin_expire(self):
         return bool(settings[SETTINGS.PIN_EXPIRATION])

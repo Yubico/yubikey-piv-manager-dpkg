@@ -24,10 +24,11 @@
 # non-source form of such a combination shall include the source code
 # for the parts of OpenSSL used as well as that of the covered work.
 
+from __future__ import print_function
 import sys
 import argparse
 import signal
-import pivman.qt_resources
+import pivman.qt_resources  # noqa: F401
 from PySide import QtGui, QtCore
 from pivman.view.main import MainWidget
 from pivman import __version__ as version, messages as m
@@ -73,14 +74,14 @@ class PivtoolApplication(qt.Application):
         try:
             controller = Controller(YkPiv())
             if controller.is_uninitialized():
-                print 'Device not initialized'
+                print('Device not initialized')
             elif controller.is_pin_expired():
                 dialog = SetPinDialog(controller, None, True)
                 if dialog.exec_():
                     QtGui.QMessageBox.information(None, m.pin_changed,
                                                   m.pin_changed_desc)
         except:
-            print 'No YubiKey PIV applet detected'
+            print('No YubiKey PIV applet detected')
 
     def _parse_args(self):
         parser = argparse.ArgumentParser(description='YubiKey PIV Manager',
@@ -108,7 +109,7 @@ class PivtoolApplication(qt.Application):
         help_menu.addAction(about_action)
 
     def _libversions(self):
-        return 'ykpiv: %s' % ykpiv_version
+        return 'ykpiv: %s' % ykpiv_version.decode('ascii')
 
     def _about(self):
         QtGui.QMessageBox.about(

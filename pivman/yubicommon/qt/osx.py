@@ -24,4 +24,26 @@
 # non-source form of such a combination shall include the source code
 # for the parts of OpenSSL used as well as that of the covered work.
 
-__version__ = "1.3.0"
+import ctypes
+from ..ctypes import CLibrary
+
+__all__ = ['app_services']
+
+
+class ProcessSerialNumber(ctypes.Structure):
+    _fields_ = [('highLongOfPsn', ctypes.c_uint32),
+                ('lowLongOfPSN', ctypes.c_uint32)]
+
+
+class ApplicationServices(CLibrary):
+    ShowHideProcess = [ctypes.POINTER(ProcessSerialNumber), ctypes.c_bool], None
+    GetFrontProcess = [ctypes.POINTER(ProcessSerialNumber)], None
+
+    def osx_hide(self):
+        """ Hide the window and let the dock
+        icon be able to show the window again. """
+        psn = ProcessSerialNumber()
+        self.GetFrontProcess(ctypes.byref(psn))
+        self.ShowHideProcess(ctypes.byref(psn), False)
+
+app_services = ApplicationServices('ApplicationServices')

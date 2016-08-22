@@ -4,11 +4,13 @@ MANIFEST.in
 NEWS
 README
 screenshot.png
+setup.cfg
 setup.py
 doc/Certificates.adoc
 doc/Device_Setup.adoc
 doc/PIN_and_Management_Key.adoc
 doc/Settings_and_Group_Policy.adoc
+doc/development.adoc
 man/pivman.1
 pivman/__init__.py
 pivman/__main__.py
@@ -33,10 +35,12 @@ pivman/view/settings_dialog.py
 pivman/view/usage_policy_dialog.py
 pivman/view/utils.py
 pivman/yubicommon/__init__.py
+pivman/yubicommon/compat.py
 pivman/yubicommon/ctypes/__init__.py
 pivman/yubicommon/ctypes/libloader.py
 pivman/yubicommon/qt/__init__.py
 pivman/yubicommon/qt/classes.py
+pivman/yubicommon/qt/osx.py
 pivman/yubicommon/qt/settings.py
 pivman/yubicommon/qt/utils.py
 pivman/yubicommon/qt/worker.py

@@ -39,20 +39,24 @@ import traceback
 # Font fixes for OSX
 if sys.platform == 'darwin':
     from platform import mac_ver
-    mac_version = tuple(mac_ver()[0].split('.'))
+    mac_version = tuple(int(x) for x in mac_ver()[0].split('.'))
     if (10, 9) <= mac_version < (10, 10):  # Mavericks
         QtGui.QFont.insertSubstitution('.Lucida Grande UI', 'Lucida Grande')
-    if (10, 10) <= mac_version:  # Yosemite
+    if (10, 10) <= mac_version < (10, 11):  # Yosemite
         QtGui.QFont.insertSubstitution('.Helvetica Neue DeskInterface',
                                        'Helvetica Neue')
-
+    if (10, 11) <= mac_version:  #El Capitan
+        QtGui.QFont.insertSubstitution('.SF NS Text', 'Helvetica Neue')
 
 # Replace excepthook with one that releases the exception to prevent memory
 # leaks:
 def excepthook(typ, val, tback):
-    traceback.print_exception(typ, val, tback)
-    sys.exc_clear()
-    del sys.last_value
-    del sys.last_traceback
-    del sys.last_type
+    try:
+        traceback.print_exception(typ, val, tback)
+        sys.exc_clear()
+        del sys.last_value
+        del sys.last_traceback
+        del sys.last_type
+    except:
+        pass  # Ignore failure here, we're likely shutting down...
 sys.excepthook = excepthook
