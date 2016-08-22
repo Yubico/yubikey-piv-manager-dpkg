@@ -1,3 +1,186 @@
+2016-08-18  Dag Heyman <dag@yubico.com>
+
+	* NEWS, pivman/__init__.py: Update version and NEWS
+
+2016-08-18  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py: Change certificate expiration to 30 years
+
+2016-08-17  Dag Heyman <dag@yubico.com>
+
+	* NEWS: Update NEWS
+
+2016-08-16  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py, setup.py: Remove PyCrypto.
+
+2016-08-16  Dag Heyman <dag@yubico.com>
+
+	* NEWS: Update NEWS
+
+2016-08-16  Dag Heyman <dag@yubico.com>
+
+	* README: Update README
+
+2016-08-15  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py: Add long valid period for default certs For certificates generated on initialization, set the expiration
+	date about 100 years in the future.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Remove python 2.6 from travis.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__main__.py: Fix library version display on py3.
+
+2016-08-15  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/init_dialog.py: Fix the authentication cert checkbox
+
+2016-08-15  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/generate_dialog.py: Enable expiration date for ssc
+	only
+
+2016-08-15  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py, pivman/messages.py, pivman/piv.py,
+	pivman/piv_cmd.py, pivman/view/generate_dialog.py: Add expiration
+	date option When generating keys and certificates add field for expiration date
+	in dialog.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Remove Python 3.5 and pypi from travis.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py: Pass active window reference instead of
+	doing new lookup.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* pivman/piv.py, pivman/view/utils.py, pivman/watcher.py: Various
+	python 3 fixes.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py, pivman/piv.py, pivman/piv_cmd.py,
+	pivman/view/cert.py, pivman/view/init_dialog.py,
+	pivman/view/main.py, pivman/view/set_key_dialog.py: Made string
+	handling python3 compatible.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py, pivman/piv.py, pivman/utils.py: Replace
+	usage of chr/ord.
+
+2016-08-15  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__main__.py, pivman/view/settings_dialog.py,
+	pivman/watcher.py: Use print function.
+
+2016-08-12  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Added initial .travis.yml file.
+
+2016-08-12  Dain Nilsson <dain@yubico.com>
+
+	* pivman/__main__.py, pivman/controller.py, pivman/messages.py,
+	pivman/piv_cmd.py, pivman/view/cert.py, setup.py: Flake8 formatting
+	fixes.
+
+2016-08-12  Dain Nilsson <dain@yubico.com>
+
+	* setup.cfg: Added configuration for flake8.
+
+2016-08-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/cert.py: Support both key and cert in .pem file Add support for a combined certificate and private key in a .pem
+	file.  Closes #6.
+
+2016-08-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py: Formatting in messages.py
+
+2016-08-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py: Add a space
+
+2016-08-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py: Update confirmation message
+
+2016-08-12  Dag Heyman <dag@yubico.com>
+
+	* : Merge pull request #14 from Yubico/certutil-fix Use certutil -ping to find CA
+
+2016-08-11  Dag Heyman <dag@yubico.com>
+
+	* pivman/utils.py: Use certutil -ping to find CA Use the -ping option for the certutil tool to avoid problems with
+	locales.  Closes #5.
+
+2016-08-11  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py, pivman/messages.py,
+	pivman/view/init_dialog.py: Authentication cert on init by default Check the authenticaton cert checkbox in the initialization wizard.
+	Also remove the word 'default'.
+
+2016-08-11  Dag Heyman <dag@yubico.com>
+
+	* vendor/yubicommon: Update yubicommon
+
+2016-08-11  Dag Heyman <dag@yubico.com>
+
+	* : Merge pull request #12 from Yubico/default-cert Add option for default certificate
+
+2016-08-10  Dag Heyman <dag@yubico.com>
+
+	* .gitignore: Add lib/ to .gitignore
+
+2016-08-10  Dag Heyman <dag@yubico.com>
+
+	* README, setup.py, test/__init__.py: Remove reference to nosetest
+
+2016-08-10  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py, pivman/messages.py,
+	pivman/view/init_dialog.py: Add option for default certificate When initializing a new YubiKey, give the user the option to
+	generate a default certificate in the authentication slot.
+
+2016-08-10  Dain Nilsson <dain@yubico.com>
+
+	* pivman/storage.py: Show touch policy for generate key by default.
+
+2016-07-01  Dain Nilsson <dain@yubico.com>
+
+	* pivman/piv.py: Require ykpiv >= 1.2.0
+
+2016-07-01  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py: Fix PUK invalidation.
+
+2016-07-01  Dain Nilsson <dain@yubico.com>
+
+	* pivman/piv.py: Set CCC when unset.
+
+2016-07-01  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py, pivman/messages.py,
+	pivman/view/init_dialog.py, pivman/view/set_pin_dialog.py: Minimum
+	PIN length is now 6.
+
+2016-07-01  Dain Nilsson <dain@yubico.com>
+
+	* pivman/libykpiv.py, pivman/piv.py, vendor/yubicommon: Update
+	yubicommon.
+
+2016-07-01  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, pivman/__init__.py: Bumped version.
+
 2015-12-08  Dain Nilsson <dain@yubico.com>
 
 	* pivman/__init__.py: Bumped version.

@@ -42,13 +42,14 @@ setup(
     entry_points={
         'gui_scripts': ['pivman=pivman.__main__:main']
     },
-    install_requires=['PySide', 'pycrypto'],
+    install_requires=['PySide'],
     yc_requires=['ctypes', 'qt'],
-    test_suite='nose.collector',
+    test_suite='test',
     tests_require=[''],
     cmdclass={'executable': executable, 'qt_resources': qt_resources('pivman')},
     classifiers=[
-        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'License :: OSI Approved :: ' +
+        'GNU General Public License v3 or later (GPLv3+)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Development Status :: 5 - Production/Stable',

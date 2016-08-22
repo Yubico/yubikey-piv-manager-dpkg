@@ -31,6 +31,8 @@ from pivman.view.utils import KEY_VALIDATOR, pin_field
 from pivman.utils import complexity_check
 from pivman.storage import settings, SETTINGS
 from pivman.yubicommon import qt
+from pivman.controller import AUTH_SLOT
+from binascii import b2a_hex
 import os
 
 
@@ -46,8 +48,7 @@ class PinPanel(QtGui.QWidget):
 
         layout.addRow(headers.section(m.pin))
         self._new_pin = pin_field()
-        label = m.new_complex_pin_label if self._complex else m.new_pin_label
-        layout.addRow(label, self._new_pin)
+        layout.addRow(m.new_pin_label, self._new_pin)
         self._confirm_pin = pin_field()
         layout.addRow(m.verify_pin_label, self._confirm_pin)
 
@@ -151,8 +152,7 @@ class AdvancedPanel(QtGui.QWidget):
 
         layout.addRow(headers.section(m.puk))
         self._puk = pin_field()
-        label = m.new_complex_puk_label if self._complex else m.new_puk_label
-        layout.addRow(label, self._puk)
+        layout.addRow(m.new_puk_label, self._puk)
         self._confirm_puk = pin_field()
         layout.addRow(m.verify_puk_label, self._confirm_puk)
 
@@ -162,7 +162,7 @@ class AdvancedPanel(QtGui.QWidget):
         self._confirm_puk.setText('')
 
     def randomize(self):
-        self._key.setText(os.urandom(KEY_LEN).encode('hex'))
+        self._key.setText(b2a_hex(os.urandom(KEY_LEN)).decode('ascii'))
 
     def _validate_key(self):
         self._copy_btn.setDisabled(not self._key.hasAcceptableInput())
@@ -202,6 +202,18 @@ class AdvancedPanel(QtGui.QWidget):
         return puk
 
 
+class DefaultCertPanel(QtGui.QWidget):
+
+    def __init__(self, headers):
+        super(DefaultCertPanel, self).__init__()
+        layout = QtGui.QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(headers.section(m.auth_cert))
+        self._auth_cert_cb = QtGui.QCheckBox(m.auth_cert_desc)
+        self._auth_cert_cb.setChecked(True)
+        layout.addWidget(self._auth_cert_cb)
+
+
 class InitDialog(qt.Dialog):
 
     def __init__(self, controller, parent=None):
@@ -220,6 +232,11 @@ class InitDialog(qt.Dialog):
         if not settings.is_locked(SETTINGS.PIN_AS_KEY) or \
                 not settings[SETTINGS.PIN_AS_KEY]:
             layout.addWidget(self._key_panel)
+
+        if AUTH_SLOT not in self._controller.certs:
+            self._auth_cert_panel = DefaultCertPanel(self.headers)
+            layout.addWidget(self._auth_cert_panel)
+
         layout.addStretch()
 
         buttons = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Ok)
@@ -232,6 +249,10 @@ class InitDialog(qt.Dialog):
             pin = self._pin_panel.pin
             key = self._key_panel.key
             puk = self._key_panel.puk
+            try:
+                auth_cert = self._auth_cert_panel._auth_cert_cb.isChecked()
+            except AttributeError:
+                auth_cert = None
 
             if key is not None and puk is None:
                 res = QtGui.QMessageBox.warning(self, m.no_puk,
@@ -248,7 +269,7 @@ class InitDialog(qt.Dialog):
             worker = QtCore.QCoreApplication.instance().worker
             worker.post(
                 m.initializing,
-                (self._controller.initialize, pin, puk, key),
+                (self._controller.initialize, auth_cert, pin, puk, key),
                 self._init_callback,
                 True
             )
