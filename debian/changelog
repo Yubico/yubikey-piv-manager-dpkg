@@ -1,9 +1,13 @@
 yubikey-piv-manager (1.3.0-1) unstable; urgency=low
 
+  [ Simon Josefsson ]
+  * Add Dag as Uploader.
+
+  [ Dag Heyman ]
   * New upstream version.
   * Drop pyside patch.
 
- -- dag <dag@yubico.com>  Mon, 22 Aug 2016 12:57:25 +0200
+ -- Simon Josefsson <simon@josefsson.org>  Tue, 23 Aug 2016 09:37:18 +0200
 
 yubikey-piv-manager (1.2.1-1) unstable; urgency=low
 
