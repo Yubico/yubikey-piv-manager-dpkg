@@ -22,6 +22,7 @@ Architecture: all
 Depends: yubico-piv-tool (>= 1.1.0),
          python-pyside.qtgui,
          python-pyside.qtnetwork,
+         python-pkg-resources,
          ${misc:Depends},
          ${python:Depends}
 Recommends: pcscd

@@ -1,0 +1,13 @@
+--- a/setup.py
++++ b/setup.py
+@@ -42,8 +42,8 @@
+     entry_points={
+         'gui_scripts': ['pivman=pivman.__main__:main']
+     },
+-    install_requires=['PySide'],
+-    yc_requires=['ctypes', 'qt'],
++    yc_requires=['ctypes'],
++    packages=['pivman', 'pivman.view', 'pivman.yubicommon', 'pivman.yubicommon.setup', 'pivman.yubicommon.ctypes', 'pivman.yubicommon.qt'],
+     test_suite='test',
+     tests_require=[''],
+     cmdclass={'executable': executable, 'qt_resources': qt_resources('pivman')},
