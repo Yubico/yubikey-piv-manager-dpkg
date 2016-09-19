@@ -28,7 +28,6 @@ from PySide import QtGui, QtCore
 from pivman import messages as m
 from pivman.utils import has_ca, request_cert_from_ca
 from pivman.storage import settings, SETTINGS
-from pivman.piv import DeviceGoneError
 from pivman.view.usage_policy_dialog import UsagePolicyDialog
 from pivman.view.utils import SUBJECT_VALIDATOR
 
@@ -211,8 +210,6 @@ class GenerateKeyDialog(UsagePolicyDialog):
             self._controller.ensure_authenticated(pin)
         except Exception as e:
             QtGui.QMessageBox.warning(self, m.error, str(e))
-            if not isinstance(e, DeviceGoneError):
-                self.accept()
             return
 
         valid_days = QtCore.QDate.currentDate().daysTo(self._expire_date.date())
@@ -258,7 +255,6 @@ class GenerateKeyDialog(UsagePolicyDialog):
             self._controller.import_certificate(cert, self._slot)
 
     def _generate_callback2(self, result):
-        self.accept()
         if isinstance(result, Exception):
             QtGui.QMessageBox.warning(self, m.error, str(result))
         else:
@@ -286,3 +282,4 @@ class GenerateKeyDialog(UsagePolicyDialog):
                 message += '\n' + m.gen_out_ca
 
             QtGui.QMessageBox.information(self, m.generated_key, message)
+        self.accept()

@@ -1,3 +1,174 @@
+2016-09-19  Dag Heyman <dag@yubico.com>
+
+	* NEWS: Update NEWS
+
+2016-09-19  Dag Heyman <dag@yubico.com>
+
+	* pivman/__init__.py: Update version
+
+2016-09-15  Dag Heyman <dag@yubico.com>
+
+	* pivman/__init__.py: Update version
+
+2016-09-15  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py: Add more specific error messages on too
+	large certs
+
+2016-09-14  Dag Heyman <dag@yubico.com>
+
+	* NEWS: Update release number in NEWS
+
+2016-09-14  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py: Adjust wording in macOS dialog
+
+2016-09-14  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/generate_dialog.py, pivman/view/init_dialog.py,
+	pivman/view/manage.py, pivman/view/set_pin_dialog.py: Never accept
+	dialog right before modal message
+
+2016-09-14  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/view/init_dialog.py: Fixup PIN
+	compability warning
+
+2016-09-14  Dag Heyman <dag@yubico.com>
+
+	* pivman/__init__.py: Update version
+
+2016-09-13  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/view/init_dialog.py,
+	pivman/view/set_pin_dialog.py, pivman/view/utils.py: Remove
+	allow-numeric checkbox
+
+2016-09-13  Dag Heyman <dag@yubico.com>
+
+	* pivman/__init__.py: Update version
+
+2016-09-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/utils.py, pivman/view/init_dialog.py: 
+	Ensure PIN is numeric in macOS dialog If PIN is not numeric when setting up for macOS, ask user to change
+	PIN.
+
+2016-09-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/view/init_dialog.py,
+	pivman/view/set_pin_dialog.py, pivman/view/utils.py: Make
+	non-numeric PIN opt-in The PIV standard and macOS only supports numeric PINs.  Make
+	non-numeric PINs opt-in and inform the user that all environments
+	doesn't support it.
+
+2016-09-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py: Remove the word please
+
+2016-09-12  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/utils.py: Change the wording in the
+	macOS dialog
+
+2016-09-09  Dag Heyman <dag@yubico.com>
+
+	* pivman/__init__.py: Update version
+
+2016-09-09  Dain Nilsson <dain@yubico.com>
+
+	* pivman/controller.py, pivman/view/main.py: Use ECCP256 for macOS.
+
+2016-09-09  Dain Nilsson <dain@yubico.com>
+
+	* pivman/view/init_dialog.py, pivman/view/main.py,
+	pivman/watcher.py: Fix deadlock in device initialization.
+
+2016-09-09  Dain Nilsson <dain@yubico.com>
+
+	* pivman/utils.py: Remove subprocess.mswindows.
+
+2016-09-09  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/init_dialog.py, pivman/view/main.py: Refactor macOS
+	dialog
+
+2016-09-09  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/view/init_dialog.py: Add heading to
+	macOS dialog
+
+2016-09-09  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/init_dialog.py, pivman/view/main.py: Small fixes macOS
+	dialog
+
+2016-09-09  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/utils.py: Add confirmation message to
+	macOS setup
+
+2016-09-09  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py, pivman/messages.py, pivman/utils.py,
+	pivman/view/init_dialog.py, pivman/view/main.py: Show button for
+	macOS setup from main window When on macOS Sierra or later, show always show a button for the
+	macOS setup.
+
+2016-09-08  Dain Nilsson <dain@yubico.com>
+
+	* pivman/piv_cmd.py: Use sys.platform instead of
+	subprocess.mswindows.  In Python 3.5 subprocess.mswindows has been removed.
+
+2016-09-07  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py, pivman/view/main.py: Don't show macOS dialog
+	if slots not empty
+
+2016-09-07  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/view/init_dialog.py: Wordwrap in macOS
+	dialog
+
+2016-09-07  Dag Heyman <dag@yubico.com>
+
+	* pivman/messages.py, pivman/view/init_dialog.py: Small fixes for
+	macOS dialog
+
+2016-09-07  Dag Heyman <dag@yubico.com>
+
+	* pivman/controller.py, pivman/messages.py,
+	pivman/view/init_dialog.py, pivman/view/main.py: Add macOS Sierra
+	specific dialog When initializing a key on macOS Sierra or later, ask if the user
+	wants to generate certificates for pairing.
+
+2016-09-02  Dag Heyman <dag@yubico.com>
+
+	* NEWS: Fix NEWS
+
+2016-08-31  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/generate_dialog.py: Fix flake8 warning
+
+2016-08-31  Dag Heyman <dag@yubico.com>
+
+	* NEWS, pivman/__init__.py: Update NEWS
+
+2016-08-31  Dag Heyman <dag@yubico.com>
+
+	* pivman/view/generate_dialog.py: Don't close gen key dialog on PIN
+	cancel When asked for PIN when generating key, don't close the whole dialog
+	if user hits cancel.
+
+2016-08-31  Dag Heyman <dag@yubico.com>
+
+	* pivman/storage.py: Revert "Show touch policy for generate key by
+	default." This reverts commit e15c40092109f17f292285ff632d9f0476142137.
+
+2016-08-29  Dag Heyman <dag@yubico.com>
+
+	* pivman/utils.py: Fix call to certutil on windows
+
 2016-08-18  Dag Heyman <dag@yubico.com>
 
 	* NEWS, pivman/__init__.py: Update version and NEWS

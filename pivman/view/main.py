@@ -27,9 +27,10 @@
 from PySide import QtGui
 from PySide import QtCore
 from pivman import messages as m
+from pivman.utils import is_macos_sierra_or_later
 from pivman.watcher import ControllerWatcher
 from pivman.view.utils import IMPORTANT
-from pivman.view.init_dialog import InitDialog
+from pivman.view.init_dialog import InitDialog, MacOSPairingDialog
 from pivman.view.set_pin_dialog import SetPinDialog
 from pivman.view.manage import ManageDialog
 from pivman.view.cert import CertDialog
@@ -43,7 +44,7 @@ class MainWidget(QtGui.QWidget):
         self._lock = QtCore.QMutex()
         self._controller = ControllerWatcher()
         self._build_ui()
-        self._controller.on_found(self._refresh_controller, True)
+        self._controller.on_found(self._refresh_controller)
         self._controller.on_lost(self._no_controller)
         self._no_controller()
 
@@ -61,6 +62,11 @@ class MainWidget(QtGui.QWidget):
         self._pin_btn = QtGui.QPushButton(m.manage_pin)
         self._pin_btn.clicked.connect(self._manage_pin)
         btns.addWidget(self._pin_btn)
+        self._setup_macos_btn = QtGui.QPushButton(m.setup_for_macos)
+        if is_macos_sierra_or_later():
+            self._setup_macos_btn.clicked.connect(
+                self._controller.wrap(self._setup_for_macos))
+            btns.addWidget(self._setup_macos_btn)
         layout.addLayout(btns)
 
         self._messages = QtGui.QTextEdit()
@@ -76,21 +82,27 @@ class MainWidget(QtGui.QWidget):
         CertDialog(self._controller, self).exec_()
         self.refresh()
 
+    def _setup_for_macos(self, controller):
+        MacOSPairingDialog(controller, self).exec_()
+        self.refresh()
+
     def refresh(self):
-        self._controller.use(self._refresh_controller, True)
+        self._controller.use(self._refresh_controller)
 
     def _no_controller(self):
         self._pin_btn.setEnabled(False)
         self._cert_btn.setEnabled(False)
+        self._setup_macos_btn.setEnabled(False)
         self._messages.setHtml(m.no_key)
 
-    def _refresh_controller(self, controller, release):
+    def _refresh_controller(self, controller):
         if not controller.poll():
             self._no_controller()
             return
 
         self._pin_btn.setEnabled(True)
         self._cert_btn.setDisabled(controller.pin_blocked)
+        self._setup_macos_btn.setDisabled(controller.pin_blocked)
 
         messages = []
         if controller.pin_blocked:
@@ -105,7 +117,10 @@ class MainWidget(QtGui.QWidget):
         if controller.is_uninitialized():
             dialog = InitDialog(controller, self)
             if dialog.exec_():
-                self.refresh()
+                if controller.should_show_macos_dialog():
+                    self._setup_for_macos(controller)
+                else:
+                    self.refresh()
             else:
                 QtCore.QCoreApplication.instance().quit()
         elif controller.is_pin_expired() and not controller.pin_blocked:

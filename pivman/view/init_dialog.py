@@ -27,13 +27,16 @@
 from PySide import QtGui, QtCore
 from pivman import messages as m
 from pivman.piv import DeviceGoneError, PivError, KEY_LEN
+from pivman.view.set_pin_dialog import SetPinDialog
 from pivman.view.utils import KEY_VALIDATOR, pin_field
 from pivman.utils import complexity_check
 from pivman.storage import settings, SETTINGS
 from pivman.yubicommon import qt
-from pivman.controller import AUTH_SLOT
 from binascii import b2a_hex
 import os
+import re
+
+NUMERIC_PATTERN = re.compile("^[0-9]+$")
 
 
 class PinPanel(QtGui.QWidget):
@@ -42,15 +45,18 @@ class PinPanel(QtGui.QWidget):
         super(PinPanel, self).__init__()
 
         self._complex = settings[SETTINGS.COMPLEX_PINS]
-
-        layout = QtGui.QFormLayout(self)
+        layout = QtGui.QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
-
-        layout.addRow(headers.section(m.pin))
+        rowLayout = QtGui.QFormLayout()
+        rowLayout.addRow(headers.section(m.pin))
         self._new_pin = pin_field()
-        layout.addRow(m.new_pin_label, self._new_pin)
+        rowLayout.addRow(m.new_pin_label, self._new_pin)
         self._confirm_pin = pin_field()
-        layout.addRow(m.verify_pin_label, self._confirm_pin)
+        rowLayout.addRow(m.verify_pin_label, self._confirm_pin)
+        layout.addLayout(rowLayout)
+        self._non_numeric_pin_warning = QtGui.QLabel(m.non_numeric_pin_warning)
+        self._non_numeric_pin_warning.setWordWrap(True)
+        layout.addWidget(self._non_numeric_pin_warning)
 
     @property
     def pin(self):
@@ -202,18 +208,6 @@ class AdvancedPanel(QtGui.QWidget):
         return puk
 
 
-class DefaultCertPanel(QtGui.QWidget):
-
-    def __init__(self, headers):
-        super(DefaultCertPanel, self).__init__()
-        layout = QtGui.QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(headers.section(m.auth_cert))
-        self._auth_cert_cb = QtGui.QCheckBox(m.auth_cert_desc)
-        self._auth_cert_cb.setChecked(True)
-        layout.addWidget(self._auth_cert_cb)
-
-
 class InitDialog(qt.Dialog):
 
     def __init__(self, controller, parent=None):
@@ -233,10 +227,6 @@ class InitDialog(qt.Dialog):
                 not settings[SETTINGS.PIN_AS_KEY]:
             layout.addWidget(self._key_panel)
 
-        if AUTH_SLOT not in self._controller.certs:
-            self._auth_cert_panel = DefaultCertPanel(self.headers)
-            layout.addWidget(self._auth_cert_panel)
-
         layout.addStretch()
 
         buttons = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Ok)
@@ -249,10 +239,6 @@ class InitDialog(qt.Dialog):
             pin = self._pin_panel.pin
             key = self._key_panel.key
             puk = self._key_panel.puk
-            try:
-                auth_cert = self._auth_cert_panel._auth_cert_cb.isChecked()
-            except AttributeError:
-                auth_cert = None
 
             if key is not None and puk is None:
                 res = QtGui.QMessageBox.warning(self, m.no_puk,
@@ -269,20 +255,90 @@ class InitDialog(qt.Dialog):
             worker = QtCore.QCoreApplication.instance().worker
             worker.post(
                 m.initializing,
-                (self._controller.initialize, auth_cert, pin, puk, key),
+                (self._controller.initialize, pin, puk, key),
                 self._init_callback,
                 True
             )
-        except (DeviceGoneError, PivError, ValueError) as e:
+        except DeviceGoneError:
+            QtGui.QMessageBox.warning(self, m.error, m.device_unplugged)
+            self.close()
+        except (PivError, ValueError) as e:
             QtGui.QMessageBox.warning(self, m.error, str(e))
 
     def _init_callback(self, result):
         if isinstance(result, DeviceGoneError):
             QtGui.QMessageBox.warning(self, m.error, m.device_unplugged)
-            self.accept()
+            self.close()
         elif isinstance(result, Exception):
             QtGui.QMessageBox.warning(self, m.error, str(result))
         else:
             if not settings.is_locked(SETTINGS.PIN_AS_KEY):
                 settings[SETTINGS.PIN_AS_KEY] = self._key_panel.use_pin
+            self.accept()
+
+
+class MacOSPairingDialog(qt.Dialog):
+
+    def __init__(self, controller, parent=None):
+        super(MacOSPairingDialog, self).__init__(parent)
+        self.setWindowTitle(m.macos_pairing_title)
+        self._controller = controller
+        self._build_ui()
+
+    def _build_ui(self):
+        layout = QtGui.QVBoxLayout(self)
+        lbl = QtGui.QLabel(m.macos_pairing_desc)
+        lbl.setWordWrap(True)
+        layout.addWidget(lbl)
+        buttons = QtGui.QDialogButtonBox()
+        yes_btn = buttons.addButton(QtGui.QDialogButtonBox.Yes)
+        yes_btn.setDefault(True)
+        no_btn = buttons.addButton(QtGui.QDialogButtonBox.No)
+        no_btn.setAutoDefault(False)
+        no_btn.setDefault(False)
+        buttons.accepted.connect(self._setup)
+        buttons.rejected.connect(self.close)
+        layout.addWidget(buttons)
+
+    def _setup(self):
+        try:
+            if not self._controller.poll():
+                self._controller.reconnect()
+
+            pin = self._controller.ensure_pin()
+            if NUMERIC_PATTERN.match(pin):
+                self._controller.ensure_authenticated(pin)
+                worker = QtCore.QCoreApplication.instance().worker
+                worker.post(
+                    m.setting_up_macos,
+                    (self._controller.setup_for_macos, pin),
+                    self.setup_callback,
+                    True
+                )
+            else:
+                res = QtGui.QMessageBox.warning(
+                    self,
+                    m.error,
+                    m.non_numeric_pin,
+                    QtGui.QMessageBox.Yes,
+                    QtGui.QMessageBox.No)
+
+                if res == QtGui.QMessageBox.Yes:
+                    SetPinDialog(self._controller, self).exec_()
+
+        except DeviceGoneError:
+            QtGui.QMessageBox.warning(self, m.error, m.device_unplugged)
+            self.close()
+        except Exception as e:
+            QtGui.QMessageBox.warning(self, m.error, str(e))
+
+    def setup_callback(self, result):
+        if isinstance(result, DeviceGoneError):
+            QtGui.QMessageBox.warning(self, m.error, m.device_unplugged)
+            self.close()
+        elif isinstance(result, Exception):
+            QtGui.QMessageBox.warning(self, m.error, str(result))
+        else:
+            QtGui.QMessageBox.information(
+                self, m.setup_macos_compl, m.setup_macos_compl_desc)
             self.accept()
