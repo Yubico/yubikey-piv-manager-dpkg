@@ -256,6 +256,20 @@ touch_needed_desc = "You have chosen to require user interaction to use this " \
     "will start slowly blinking. At that point please touch the button on " \
     "your YubiKey."
 touch_prompt = "Touch the button now..."
-auth_cert = "Authentication certificate"
-auth_cert_desc = "Generate a certificate for authentication"
 expiration_date = "Expiration date"
+setting_up_macos = "Setting up for macOS..."
+macos_pairing_title = "Set Up YubiKey for macOS"
+macos_pairing_desc = "<p>This version of macOS allows you to pair your " \
+    "YubiKey with your user account. When you have completed the pairing, " \
+    "you can use your YubiKey to log in to your Mac.</p><p>" \
+    "Do you want to generate certificates for this purpose (recommended)?</p>"
+setup_for_macos = "Setup for macOS"
+setup_macos_compl = "Setup for macOS completed"
+setup_macos_compl_desc = "Your YubiKey is now ready to be paired with your " \
+    "user account. To start the pairing process, remove and re-insert " \
+    "your YubiKey."
+non_numeric_pin_warning = "For cross-platform compatibility, " \
+    "we recommend " \
+    "you enter a PIN of 6-8 numeric digits."
+non_numeric_pin = "Pairing your YubiKey with macOS requires your PIN to only "\
+    "contain numeric characters. Do you want to change your PIN?"

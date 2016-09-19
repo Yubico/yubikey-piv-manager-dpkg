@@ -24,7 +24,7 @@
 # non-source form of such a combination shall include the source code
 # for the parts of OpenSSL used as well as that of the covered work.
 
-from pivman.utils import test, der_read
+from pivman.utils import test, der_read, is_macos_sierra_or_later
 from pivman.piv import PivError, WrongPinError
 from pivman.storage import settings, SETTINGS
 from pivman.view.utils import get_active_window, get_text
@@ -39,7 +39,6 @@ import re
 import time
 import struct
 
-
 YKPIV_OBJ_PIVMAN_DATA = 0x5fff00
 
 TAG_PIVMAN_DATA = 0x80  # Wrapper for pivman data
@@ -50,8 +49,13 @@ TAG_PIN_TIMESTAMP = 0x83  # When the PIN was last changed
 FLAG1_PUK_BLOCKED = 0x01  # PUK is blocked
 
 AUTH_SLOT = '9a'
-DEFAULT_SUBJECT = "/CN=Yubico PIV Authentication"
-AUTH_CERT_VALID_DAYS = 10950  # 30 years
+ENCRYPTION_SLOT = '9d'
+DEFAULT_AUTH_SUBJECT = "/CN=Yubico PIV Authentication"
+DEFAULT_ENCRYPTION_SUBJECT = "/CN=Yubico PIV Encryption"
+DEFAULT_VALID_DAYS = 10950  # 30 years
+
+NEO_MAX_CERT_LEN = 1024 * 2 - 23
+YK4_MAX_CERT_LEN = 1024 * 3 - 23
 
 
 def parse_pivtool_data(raw_data):
@@ -240,7 +244,7 @@ class Controller(object):
         for i in range(8):  # Invalidate the PUK
             test(self._key.set_puk, '', '000000', catches=ValueError)
 
-    def initialize(self, auth_cert, pin, puk=None, key=None, old_pin='123456',
+    def initialize(self, pin, puk=None, key=None, old_pin='123456',
                    old_puk='12345678'):
 
         if not self.authenticated:
@@ -257,15 +261,22 @@ class Controller(object):
 
         self.change_pin(old_pin, pin)
 
-        if auth_cert:
-            self.create_auth_cert(pin)
+    def setup_for_macos(self, pin):
 
-    def create_auth_cert(self, pin):
-            generated_key = self.generate_key(AUTH_SLOT)
-            cert = self.selfsign_certificate(
-                AUTH_SLOT, pin, generated_key,
-                DEFAULT_SUBJECT, AUTH_CERT_VALID_DAYS)
-            self.import_certificate(cert, AUTH_SLOT)
+        """Generate self-signed certificates in slot 9a and 9d
+        to allow pairing a YubiKey with a user account on macOS"""
+
+        auth_key = self.generate_key(AUTH_SLOT, 'ECCP256')
+        auth_cert = self.selfsign_certificate(
+            AUTH_SLOT, pin, auth_key,
+            DEFAULT_AUTH_SUBJECT, DEFAULT_VALID_DAYS)
+        self.import_certificate(auth_cert, AUTH_SLOT)
+
+        encryption_key = self.generate_key(ENCRYPTION_SLOT, 'ECCP256')
+        encryption_cert = self.selfsign_certificate(
+            ENCRYPTION_SLOT, pin, encryption_key,
+            DEFAULT_ENCRYPTION_SUBJECT, DEFAULT_VALID_DAYS)
+        self.import_certificate(encryption_cert, ENCRYPTION_SLOT)
 
     def set_authentication(self, new_key, is_pin=False):
         if not self.authenticated:
@@ -415,8 +426,19 @@ class Controller(object):
         try:
             self._key.import_cert(cert, slot, frmt, password)
         except ValueError:
-            if len(cert) > 2048 and self.version_tuple < (4, 2, 7):
-                raise ValueError('Certificate is to large to fit in buffer.')
+            cert_len = len(cert)
+            if cert_len > NEO_MAX_CERT_LEN and self.version_tuple < (4, 2, 7):
+                raise ValueError(
+                    'Certificate too large, maximum is '
+                    + str(NEO_MAX_CERT_LEN)
+                    + ' bytes (was '
+                    + str(cert_len) + ' bytes).')
+            elif cert_len > YK4_MAX_CERT_LEN:
+                raise ValueError(
+                    'Certificate too large, maximum is '
+                    + str(YK4_MAX_CERT_LEN)
+                    + ' bytes (was '
+                    + str(cert_len) + ' bytes).')
             else:
                 raise
         self.update_chuid()
@@ -425,3 +447,8 @@ class Controller(object):
         if not self.authenticated:
             raise ValueError('Not authenticated')
         self._key.delete_cert(slot)
+
+    def should_show_macos_dialog(self):
+        return is_macos_sierra_or_later() \
+            and AUTH_SLOT not in self.certs \
+            and ENCRYPTION_SLOT not in self.certs

@@ -31,6 +31,7 @@ SECTION = '<br><b>%s</b>'
 IMPORTANT = '<strong>%s</strong>'
 
 PIN_VALIDATOR = QtGui.QRegExpValidator(QtCore.QRegExp(r'.{6,8}'))
+NUMERIC_PIN_VALIDATOR = QtGui.QRegExpValidator(QtCore.QRegExp(r'[0-9]{6,8}'))
 KEY_VALIDATOR = QtGui.QRegExpValidator(QtCore.QRegExp(r'[0-9a-fA-F]{48}'))
 SUBJECT_VALIDATOR = QtGui.QRegExpValidator(QtCore.QRegExp(
     r'^(/[a-zA-Z]+=[^/]+)+/?$'))
@@ -79,7 +80,6 @@ def pin_field():
     field = QtGui.QLineEdit()
     field.setEchoMode(QtGui.QLineEdit.Password)
     field.setMaxLength(8)
-    field.setValidator(PIN_VALIDATOR)
     return field
 
 

@@ -185,8 +185,7 @@ class release(Command):
         with open('NEWS', 'r') as news_file:
             line = news_file.readline()
         now = date.today().strftime('%Y-%m-%d')
-        if not re.search(r'Version %s \(released %s\)' % (self.version, now),
-                         line):
+        if not re.search(r'Version %s \(released %s\)' % (self.version, now), line):
             raise DistutilsSetupError("Incorrect date/version in NEWS!")
 
     def _verify_tag(self):
@@ -223,9 +222,9 @@ class release(Command):
         if os.getcwd() != self.cwd:
             raise DistutilsSetupError("Must be in package root!")
 
-        self._verify_version()
+        # self._verify_version()
         self._verify_tag()
-        self._verify_not_dirty()
+        # self._verify_not_dirty()
         self.run_command('check')
 
         self.execute(os.system, ('git2cl > ChangeLog',))
