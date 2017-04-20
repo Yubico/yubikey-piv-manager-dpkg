@@ -63,12 +63,12 @@ class SetPinDialog(qt.Dialog):
         self._old_pin = pin_field()
         layout.addWidget(self._old_pin)
         layout.addWidget(QtGui.QLabel(self.label_new))
+
         self._new_pin = pin_field()
         layout.addWidget(self._new_pin)
         layout.addWidget(QtGui.QLabel(self.label_verify))
         self._confirm_pin = pin_field()
         layout.addWidget(self._confirm_pin)
-
         self._new_pin.textChanged.connect(self._check_confirm)
         self._confirm_pin.textChanged.connect(self._check_confirm)
 
@@ -131,9 +131,9 @@ class SetPinDialog(qt.Dialog):
             else:
                 self.reject()
         else:
-            self.accept()
             QtGui.QMessageBox.information(self, self.info_changed,
                                           self.desc_changed)
+            self.accept()
 
 
 class SetPukDialog(SetPinDialog):

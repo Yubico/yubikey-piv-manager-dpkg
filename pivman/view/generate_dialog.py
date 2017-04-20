@@ -28,7 +28,6 @@ from PySide import QtGui, QtCore
 from pivman import messages as m
 from pivman.utils import has_ca, request_cert_from_ca
 from pivman.storage import settings, SETTINGS
-from pivman.piv import DeviceGoneError
 from pivman.view.usage_policy_dialog import UsagePolicyDialog
 from pivman.view.utils import SUBJECT_VALIDATOR
 
@@ -180,6 +179,7 @@ class GenerateKeyDialog(UsagePolicyDialog):
         return self._out_type.checkedButton().property('value')
 
     def _generate(self):
+
         if self.out_format != 'pk' and not \
                 self._subject.hasAcceptableInput():
             QtGui.QMessageBox.warning(self, m.invalid_subject,
@@ -211,11 +211,20 @@ class GenerateKeyDialog(UsagePolicyDialog):
             self._controller.ensure_authenticated(pin)
         except Exception as e:
             QtGui.QMessageBox.warning(self, m.error, str(e))
-            if not isinstance(e, DeviceGoneError):
-                self.accept()
             return
 
         valid_days = QtCore.QDate.currentDate().daysTo(self._expire_date.date())
+
+        # User confirmation for overwriting slot data
+        if self._slot in self._controller.certs:
+            res = QtGui.QMessageBox.warning(
+                self,
+                m.overwrite_slot_warning,
+                m.overwrite_slot_warning_desc % self._slot,
+                QtGui.QMessageBox.Ok,
+                QtGui.QMessageBox.Cancel)
+            if res == QtGui.QMessageBox.Cancel:
+                return
 
         worker = QtCore.QCoreApplication.instance().worker
         worker.post(
@@ -258,7 +267,6 @@ class GenerateKeyDialog(UsagePolicyDialog):
             self._controller.import_certificate(cert, self._slot)
 
     def _generate_callback2(self, result):
-        self.accept()
         if isinstance(result, Exception):
             QtGui.QMessageBox.warning(self, m.error, str(result))
         else:
@@ -286,3 +294,4 @@ class GenerateKeyDialog(UsagePolicyDialog):
                 message += '\n' + m.gen_out_ca
 
             QtGui.QMessageBox.information(self, m.generated_key, message)
+        self.accept()
