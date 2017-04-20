@@ -19,7 +19,7 @@ Vcs-Git: https://github.com/Yubico/yubikey-piv-manager-dpkg.git
 
 Package: yubikey-piv-manager
 Architecture: all
-Depends: yubico-piv-tool (>= 1.1.0),
+Depends: yubico-piv-tool (>= 1.4.3),
          python-pyside.qtgui,
          python-pyside.qtnetwork,
          python-pkg-resources,
