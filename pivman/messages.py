@@ -163,8 +163,7 @@ save_pk = "Save Public Key as..."
 save_csr = "Save Certificate Signing Request as..."
 generate_key = "Generate new key..."
 generate_key_warning_1 = "A new private key will be generated and stored in " \
-    "slot '%s'. Anything currently in the slot will be deleted. This action " \
-    "cannot be undone."
+    "slot '%s'."
 generating_key = "Generating new key..."
 generated_key = "New key generated"
 generated_key_desc_1 = "A new private key has been generated in slot '%s'."
@@ -178,7 +177,7 @@ import_from_file_warning_1 = "Anything currently in slot '%s' will be " \
 importing_file = "Importing from file..."
 unsupported_file = "Unsupported file type"
 delete_cert = "Delete certificate"
-delete_cert_warning_1 = "This will delete the certificate  and key stored in " \
+delete_cert_warning_1 = "This will delete the certificate and key stored in " \
     "slot '%s' of your YubiKey, and cannot be undone."
 deleting_cert = "Deleting certificate..."
 cert_exported = "Certificate exported"
@@ -273,3 +272,14 @@ non_numeric_pin_warning = "For cross-platform compatibility, " \
     "you enter a PIN of 6-8 numeric digits."
 non_numeric_pin = "Pairing your YubiKey with macOS requires your PIN to only "\
     "contain numeric characters. Do you want to change your PIN?"
+overwrite_slot_warning = "Overwrite slot?"
+overwrite_slot_warning_desc = "This will overwrite all data currently " \
+    "stored in slot '%s'. This action cannot be undone. " \
+    "Do you want to continue?"
+overwrite_slot_warning_macos = "This will overwrite all data currently " \
+    "stored in slot '9a' and '9d'. This action cannot be undone. "\
+    "Do you want to continue?"
+not_default_pin = "Your credentials for the YubiKey are not the default " \
+    "values. This may occur when the PIN or PUK has been changed with a " \
+    "different tool. Use the 'Manage device PINs' option to change the " \
+    "credentials."

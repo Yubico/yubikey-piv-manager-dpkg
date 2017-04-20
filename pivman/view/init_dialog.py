@@ -26,13 +26,14 @@
 
 from PySide import QtGui, QtCore
 from pivman import messages as m
-from pivman.piv import DeviceGoneError, PivError, KEY_LEN
+from pivman.piv import DeviceGoneError, PivError, WrongPinError, KEY_LEN
 from pivman.view.set_pin_dialog import SetPinDialog
 from pivman.view.utils import KEY_VALIDATOR, pin_field
 from pivman.utils import complexity_check
 from pivman.storage import settings, SETTINGS
 from pivman.yubicommon import qt
 from binascii import b2a_hex
+from pivman.controller import AUTH_SLOT, ENCRYPTION_SLOT
 import os
 import re
 
@@ -110,12 +111,12 @@ class KeyPanel(QtGui.QWidget):
         if btn == self._kt_pin:
             self.layout().removeWidget(self._adv_panel)
             self._adv_panel.hide()
-            self.adjustSize()
-            self.parentWidget().adjustSize()
         else:
             self._adv_panel.reset()
             self.layout().addWidget(self._adv_panel)
             self._adv_panel.show()
+        self.adjustSize()
+        self.parentWidget().adjustSize()
 
     @property
     def use_pin(self):
@@ -269,6 +270,9 @@ class InitDialog(qt.Dialog):
         if isinstance(result, DeviceGoneError):
             QtGui.QMessageBox.warning(self, m.error, m.device_unplugged)
             self.close()
+        if isinstance(result, WrongPinError):
+            QtGui.QMessageBox.warning(self, m.error, m.not_default_pin)
+            self.close()
         elif isinstance(result, Exception):
             QtGui.QMessageBox.warning(self, m.error, str(result))
         else:
@@ -308,6 +312,19 @@ class MacOSPairingDialog(qt.Dialog):
             pin = self._controller.ensure_pin()
             if NUMERIC_PATTERN.match(pin):
                 self._controller.ensure_authenticated(pin)
+
+                # User confirmation for overwriting slot data
+                if (AUTH_SLOT in self._controller.certs
+                        or ENCRYPTION_SLOT in self._controller.certs):
+                    res = QtGui.QMessageBox.warning(
+                        self,
+                        m.overwrite_slot_warning,
+                        m.overwrite_slot_warning_macos,
+                        QtGui.QMessageBox.Cancel,
+                        QtGui.QMessageBox.Ok)
+                    if res == QtGui.QMessageBox.Cancel:
+                        return
+
                 worker = QtCore.QCoreApplication.instance().worker
                 worker.post(
                     m.setting_up_macos,

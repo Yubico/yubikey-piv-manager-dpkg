@@ -1,3 +1,15 @@
+* Version 1.4.2 (released 2017-04-19)
+ ** PIN, PUK, management key and certificate passwords are now passed to yubico-piv-tool using 
+ standard input insted of as CLI arguments. This prevents them from being logged by some
+ operating system auditing tools. 
+
+* Version 1.4.1 (released 2016-09-30)
+ ** Now displays a confirmation dialog box when overwriting certificate data in a slot (including in the macOS Sierra wizard).
+ ** On initialization, now shows a warning when the PIN or PUK has been changed in another tool.
+ ** It is now possible to close the initialization and the expired PIN dialog boxes without closing the application.
+ ** Bugfix: Connecting to a Certificate Authority should now work as expected (even over a network).
+ ** Bugfix: Layout in the initialization dialog box was not acting as expected when the radio buttons were clicked.
+
 * Version 1.4.0 (released 2016-09-20)
  ** New wizard for setting up a YubiKey for pairing with macOS Sierra, providing an easy way to generate certificates in the authentication and key management slots. After the YubiKey is paired, macOS Sierra will recognize the YubiKey and allow you to pair it with an account on macOS.
  ** Improved appearance on Retina displays.
